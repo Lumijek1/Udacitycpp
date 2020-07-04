@@ -51,7 +51,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 bool Compare(RouteModel::Node *node1, RouteModel::Node *node2){
   auto f1 = node1->h_value + node1->g_value;
   auto f2 = node2->h_value + node2->g_value;
-  return f1 < f2;
+  return f1 > f2;
 // TODO 5: Complete the NextNode method to sort the open list and return the next node.
 // Tips:
 // - Sort the open_list according to the sum of the h value and g value.
@@ -61,8 +61,8 @@ bool Compare(RouteModel::Node *node1, RouteModel::Node *node2){
 }
 RouteModel::Node *RoutePlanner::NextNode() {
   std::sort(open_list.begin(), open_list.end(), Compare);
-  RouteModel::Node *lowest_node = open_list.front();
-  open_list.erase(open_list.begin());
+  RouteModel::Node *lowest_node = open_list.back();
+  open_list.erase(open_list.end());
   return lowest_node;
   
 }
@@ -110,7 +110,9 @@ void RoutePlanner::AStarSearch() {
     current_node = NextNode();
     if(current_node->distance(*end_node) == 0.0){
       m_Model.path = ConstructFinalPath(current_node);
+      return;
     }
     AddNeighbors(current_node);
   }
+  return;
 }
