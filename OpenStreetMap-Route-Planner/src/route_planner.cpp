@@ -9,6 +9,7 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
     end_y *= 0.01;
   
     start_node = &m_Model.FindClosestNode(start_x, start_y);
+  
     end_node = &m_Model.FindClosestNode(end_x, end_y);
 
     // TODO 2: Use the m_Model.FindClosestNode method to find the closest nodes to the starting and ending coordinates.
@@ -49,8 +50,8 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 }
 
 bool Compare(RouteModel::Node *node1, RouteModel::Node *node2){
-  auto f1 = node1->h_value + node1->g_value;
-  auto f2 = node2->h_value + node2->g_value;
+  const auto f1 = node1->h_value + node1->g_value;
+  const auto f2 = node2->h_value + node2->g_value;
   return f1 > f2;
 // TODO 5: Complete the NextNode method to sort the open list and return the next node.
 // Tips:
@@ -62,7 +63,7 @@ bool Compare(RouteModel::Node *node1, RouteModel::Node *node2){
 RouteModel::Node *RoutePlanner::NextNode() {
   std::sort(open_list.begin(), open_list.end(), Compare);
   RouteModel::Node *lowest_node = open_list.back();
-  open_list.erase(open_list.end());
+  open_list.pop_back();
   return lowest_node;
   
 }
