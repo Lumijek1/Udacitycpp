@@ -90,7 +90,7 @@ float LinuxParser::MemoryUtilization() {
 }
 
 // TODO: Read and return the system uptime
-long LinuxParser::UpTime() { 
+long int LinuxParser::UpTime() { 
   string line, upTime;
   std::ifstream filestream(kProcDirectory + kUptimeFilename);
   long TotalUpTime = 0;
