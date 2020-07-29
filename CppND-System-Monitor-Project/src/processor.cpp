@@ -10,19 +10,7 @@
 using std::string;
 using std::vector;
 // TODO: Return the aggregate CPU utilization
-float Processor::Utilization() { 
-  vector<string> prev = LinuxParser::CpuUtilization();
-  
-  long int prevuser = std::stol(prev[0]);
-  long int prevnice = std::stol(prev[1]);
-  long int prevsystem = std::stol(prev[2]);
-  long int previdle = std::stol(prev[3]);
-  long int previowait = std::stol(prev[4]);
-  long int previrq = std::stol(prev[5]);
-  long int prevsoftirq = std::stol(prev[6]);
-  long int prevsteal = std::stol(prev[7]);
-  
-  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+float Processor::Utilization() {   
   
   vector<string> current = LinuxParser::CpuUtilization();
   
@@ -45,6 +33,15 @@ float Processor::Utilization() {
   long int idled = Idle - PrevIdle;
 
   long int CPU_Percentage = (totald - idled)/totald;
+  
+  prevuser = user;
+  prevnice = nice;
+  prevsystem = system;
+  previdle = idle;
+  previowait = iowait;
+  previrq = irq;
+  prevsoftirq = softirq;
+  prevsteal = steal;
   return CPU_Percentage;
   
 }
