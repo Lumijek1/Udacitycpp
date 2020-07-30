@@ -32,8 +32,8 @@ float Processor::Utilization() {
   long int totald = Total - PrevTotal;
   long int idled = Idle - PrevIdle;
 
-  long int CPU_Percentage = (totald - idled)/totald;
-  
+  long int CPU_Percentage = (float)(totald - idled)/(float)totald;
+    
   prevuser = user;
   prevnice = nice;
   prevsystem = system;
