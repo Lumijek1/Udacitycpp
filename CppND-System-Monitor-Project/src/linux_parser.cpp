@@ -281,6 +281,6 @@ float LinuxParser::CpuUtilization(int pid){
   }
   int total_time = times[0] + times[1] + times[2] + times[3];
   int seconds = LinuxParser::UpTime() - (LinuxParser::UpTime(pid) / sysconf(_SC_CLK_TCK));
-  float cpu_usage = 100 * (((float)total_time/(float)sysconf(_SC_CLK_TCK))/(float)seconds);
+  float cpu_usage = (((float)total_time/(float)sysconf(_SC_CLK_TCK))/(float)seconds);
   return cpu_usage;
 }
