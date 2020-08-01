@@ -35,13 +35,14 @@ string LinuxParser::OperatingSystem() {
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::Kernel() {
-  string os, kernel;
+  string os, version, kernel;
   string line;
   std::ifstream stream(kProcDirectory + kVersionFilename);
   if (stream.is_open()) {
     std::getline(stream, line);
     std::istringstream linestream(line);
-    linestream >> os >> kernel;
+    linestream >> os >> version >> kernel;
+    
   }
   return kernel;
 }
@@ -206,7 +207,8 @@ string LinuxParser::Ram(int pid) {
       std::istringstream linestream(line);  
       linestream >> key >> value;
       if(key == "VmSize:"){
-        return value;
+        int mb = std::stoi(value) / 1024;
+        return std::to_string(mb);
       }
     }
   }
