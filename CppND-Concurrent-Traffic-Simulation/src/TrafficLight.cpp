@@ -18,7 +18,7 @@ T MessageQueue<T>::receive()
     // to wait for and receive new messages and pull them from the queue using move semantics. 
     // The received object should then be returned by the receive function. 
   std::unique_lock<std::mutex> lck(_mutexMQ);
-  _condMQ.wait(lck, [this] {return _queue.empty();});
+  _condMQ.wait(lck, [this] {return !_queue.empty();});
   T message = std::move(_queue.front());
   _queue.pop_front();
   return message;
@@ -91,7 +91,7 @@ void TrafficLight::cycleThroughPhases()
         auto send = std::async(std::launch::async, &MessageQueue<TrafficLightPhase>::send,&message_queue, std::move(_currentPhase));
         send.wait();
         
-        auto fTime = std::chrono::system_clock::now();
+        fTime = std::chrono::system_clock::now();
         duration = random (4, 6);
       }
       
