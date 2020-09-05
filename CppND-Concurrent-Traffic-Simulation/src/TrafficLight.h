@@ -28,6 +28,9 @@ public:
     T receive();
 
 private:
+	std::deque<T> _queue;
+    std::condition_variable _condMQ;
+    std::mutex _mutexMQ;
     
 };
 
