@@ -81,10 +81,10 @@ void TrafficLight::cycleThroughPhases()
       
       if(timedif >= duration){
         if(_currentPhase == green){
-          _currentPhase == red;
+          _currentPhase = red;
         }
         else{
-          _currentPhase == green;
+          _currentPhase = green;
         }
       
         
