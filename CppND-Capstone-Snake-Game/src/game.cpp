@@ -18,12 +18,16 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+  bool pause = false;
 
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, snake);
+    controller.HandleInput(running, snake, pause);
+    if(pause == true){
+      continue;
+    }
     Update();
     renderer.Render(snake, food);
 
@@ -84,6 +88,10 @@ void Game::Update() {
   }
 }
 void Game::setSpeedIncrease(double speed) { speedIncrease = speed; }
-
+bool Game::setObstacles(bool obs, int numberOfObstacles) {
+  obstacles = true; 
+  this->numberOfObstacles = numberOfObstacles;
+}
 int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
+

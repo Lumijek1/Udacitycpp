@@ -149,6 +149,7 @@ CMakeFiles/SnakeGame.dir/src/gameStart.cpp.o: /usr/include/SDL2/close_code.h
 
 CMakeFiles/SnakeGame.dir/src/main.cpp.o: ../src/controller.h
 CMakeFiles/SnakeGame.dir/src/main.cpp.o: ../src/game.h
+CMakeFiles/SnakeGame.dir/src/main.cpp.o: ../src/gameStart.h
 CMakeFiles/SnakeGame.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/SnakeGame.dir/src/main.cpp.o: ../src/renderer.h
 CMakeFiles/SnakeGame.dir/src/main.cpp.o: ../src/snake.h

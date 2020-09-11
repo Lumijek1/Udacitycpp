@@ -6,19 +6,20 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "game.h"
+
 
 class gameStarter{
   public:
-    gameStarter();
+  	int start(Game &game);
   	void highScore(std::string name, int score);
   	void printLeaderBoards();
-  	void setDifficulty(std::string difficulty);
+  	void setDifficulty(int difficulty, Game& game);
   	void quit();
   	bool playAgain();
   	
   private:
   	static bool sortByValue(const std::pair<std::string, int> &a, const std::pair<std::string, int> &b);
-    std::string lower(std::string data);
 };
 
 
