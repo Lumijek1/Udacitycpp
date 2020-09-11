@@ -46,7 +46,7 @@ void gameStarter::printLeaderBoards(){
 void gameStarter::setDifficulty(std::string difficulty){
   if(lower(difficulty) == "easy" || 
      difficulty == "1"){
-    Game.setSpeedIncrease(0.02);
+    Game::setSpeedIncrease(0.02);
   }
   if(lower(difficulty) == "medium" || 
      difficulty == "1"){
