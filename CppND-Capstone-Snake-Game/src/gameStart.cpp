@@ -8,7 +8,7 @@ bool gameStarter::sortByValue(const std::pair<std::string, int> &a,const std::pa
 } 
 
 
-int gameStarter::start(Game &game){
+bool gameStarter::start(Game &game){
   std::cout << "Welcome to the Snake Game" << std::endl;
   std::cout << "Do you want to: \n" << std::endl;
   std::cout << "1. Play" << std::endl;
@@ -35,18 +35,19 @@ int gameStarter::start(Game &game){
     setDifficulty(difficultyInput, game);
     
     std::cout << "Starting Game!" << std::endl;
-    return 1;
+    return true;
   }
   else if (input == 2){
-    std::cout << "The goal if the game is to get as big as possible! " << std::endl;
+    std::cout << "\n\nThe goal if the game is to get as big as possible! " << std::endl;
     std::cout << "Use your arrow keys to move. Type q to quit the game at any time and p to pause the game" << std::endl;
-    std::cout << "If you are playing with obstacles be sure to avoid them so that you don't die! " << std::endl;
-    return 2;     	    
+    std::cout << "If you are playing with obstacles be sure to avoid them so that you don't die! \n\n" << std::endl;
+    return false;     	    
   }
   else if (input == 3){
     std::cout << "\n\n" << std::endl;
     printLeaderBoards();
-    return 3;
+    std::cout << "\n\n" << std::endl;
+    return false;
   }
   else if (input == 4){
     quit();
@@ -54,11 +55,12 @@ int gameStarter::start(Game &game){
   
 }
 void gameStarter::highScore(std::string name, int score){
-  std::fstream highscore("highScore.txt", std::ios::app);
+  std::fstream highscore("../src/highScore.txt", std::ios::app);
   if (highscore.is_open())
   {
     highscore << name << " " << score << std::endl;
   }
+  std::cout << "Score has been saved." << std::endl;
   highscore.close();
 }
 void gameStarter::printLeaderBoards(){
@@ -73,7 +75,7 @@ void gameStarter::printLeaderBoards(){
   		}
   	}
   }
-  else std::cout << "Open failed" << std::endl;
+  else std::cout << "Could not open find Leaderboards! " << std::endl;
   std::vector<std::pair<std::string, int>> lb;
   std::map<std::string, int> :: iterator it;
   for (it = leaderBoard.begin(); it != leaderBoard.end(); it++) {
@@ -96,6 +98,7 @@ void gameStarter::setDifficulty(int difficulty, Game& game){
   if(difficulty == 3){
      game.setSpeedIncrease(0.04);
      game.setObstacles(true, 20);
+     game.setBorder(true);
   }
 }
 bool gameStarter::playAgain(){

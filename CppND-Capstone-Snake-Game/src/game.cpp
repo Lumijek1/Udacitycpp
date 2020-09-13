@@ -28,8 +28,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     if(pause == true){
       continue;
     }
-    Update();
-    renderer.Render(snake, food);
+
+    Update(running);
+    renderer.Render(snake, food, border);
 
     frame_end = SDL_GetTicks();
 
@@ -51,6 +52,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     if (frame_duration < target_frame_duration) {
       SDL_Delay(target_frame_duration - frame_duration);
     }
+
   }
   
 }
@@ -70,10 +72,12 @@ void Game::PlaceFood() {
   }
 }
 
-void Game::Update() {
-  if (!snake.alive) return;
-
-  snake.Update();
+void Game::Update(bool &running) {
+  if (!snake.alive){
+    running = false;
+    return;
+  }
+  snake.Update(border);
 
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
@@ -92,6 +96,7 @@ bool Game::setObstacles(bool obs, int numberOfObstacles) {
   obstacles = true; 
   this->numberOfObstacles = numberOfObstacles;
 }
+bool Game::setBorder(bool ans){border = ans;}
 int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
 

@@ -11,7 +11,7 @@
 
 class gameStarter{
   public:
-  	int start(Game &game);
+  	bool start(Game &game);
   	void highScore(std::string name, int score);
   	void printLeaderBoards();
   	void setDifficulty(int difficulty, Game& game);

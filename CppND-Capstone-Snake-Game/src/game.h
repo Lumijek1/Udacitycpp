@@ -16,6 +16,7 @@ class Game {
   int GetSize() const;
   void setSpeedIncrease(double speed);
   bool setObstacles(bool obs, int numberOfObstacles);
+  bool setBorder(bool ans);
 
  private:
   Snake snake;
@@ -30,9 +31,10 @@ class Game {
   double speedIncrease{0.02};
   bool obstacles = false;
   int numberOfObstacles = 0;
+  bool border = false;
 
   void PlaceFood();
-  void Update();
+  void Update(bool &running);
 };
 
 #endif
