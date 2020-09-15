@@ -34,7 +34,6 @@ bool gameStarter::start(Game &game){
   	}
     setDifficulty(difficultyInput, game);
     
-    std::cout << "Starting Game!" << std::endl;
     return true;
   }
   else if (input == 2){
@@ -44,7 +43,6 @@ bool gameStarter::start(Game &game){
     return false;     	    
   }
   else if (input == 3){
-    std::cout << "\n\n" << std::endl;
     printLeaderBoards();
     std::cout << "\n\n" << std::endl;
     return false;
@@ -81,11 +79,39 @@ void gameStarter::printLeaderBoards(){
   for (it = leaderBoard.begin(); it != leaderBoard.end(); it++) {
     lb.push_back(make_pair(it->first, it->second));
   }
-  std::sort(lb.begin(), lb.end(), sortByValue); 
+  std::sort(lb.begin(), lb.end(), sortByValue);
   std::cout << "Leaderboard! " << std::endl;
-  for (int i = 0; i < 10; i++) {
+  int lbc;
+  if(lb.size() < 10){
+    lbc = lb.size();
+  }
+  else{
+    lbc = 10;
+  }
+  for (int i = 0; i < lbc; i++) {
 		std::cout << i + 1 << ". " << lb[i].first << ": " << lb[i].second << std::endl;
   }
+}
+
+int gameStarter::getCurrentHighScore(){
+  std::fstream highScores("../src/highScore.txt");
+  std::vector<int> hs;
+  std::string line, name, score;
+  if (highScores.is_open()){
+  	while(std::getline(highScores, line)){
+  		std::istringstream linestream(line);
+  		while (linestream >> name >> score) {
+  			hs.push_back(std::stoi(score));
+  		}
+  	}
+  }
+  if(hs.size() == 0){
+    highscore = 0;
+  }
+  else{
+  	highscore = *max_element(hs.begin(), hs.end());
+  }
+  return highscore;
 }
 void gameStarter::setDifficulty(int difficulty, Game& game){
   if(difficulty == 1){
@@ -101,9 +127,7 @@ void gameStarter::setDifficulty(int difficulty, Game& game){
      game.setBorder(true);
   }
 }
-bool gameStarter::playAgain(){
-  
-}
+
 void gameStarter::quit(){
   exit(0);
 }

@@ -19,7 +19,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   int frame_count = 0;
   bool running = true;
   bool pause = false;
-
+  addObstacles();
   while (running) {
     frame_start = SDL_GetTicks();
 
@@ -30,7 +30,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     }
 
     Update(running);
-    renderer.Render(snake, food, border);
+    renderer.Render(snake, food, border, obstaclePoints);
 
     frame_end = SDL_GetTicks();
 
@@ -64,10 +64,34 @@ void Game::PlaceFood() {
     y = random_h(engine);
     // Check that the location is not occupied by a snake item before placing
     // food.
-    if (!snake.SnakeCell(x, y)) {
+    if (!snake.SnakeCell(x, y) && !containsObstacle(x, y)) {
       food.x = x;
       food.y = y;
       return;
+    }
+  }
+}
+bool Game::containsObstacle(int x, int y){
+  for(SDL_Point obs: obstaclePoints){
+    if(obs.x == x && obs.y == y){
+      return true;
+    }
+  }
+  return false;
+}
+void Game::addObstacles(){
+  int x, y;
+  for(int i = 0;i < numberOfObstacles;i++){
+    SDL_Point obsta;
+    while(true){
+      x = random_w(engine);
+      y = random_h(engine);
+      if(!snake.SnakeCell(x, y) && !containsObstacle(x, y)){
+        obsta.x = x;
+        obsta.y = y;
+        obstaclePoints.push_back(obsta);
+        break;
+      }
     }
   }
 }
@@ -81,6 +105,11 @@ void Game::Update(bool &running) {
 
   int new_x = static_cast<int>(snake.head_x);
   int new_y = static_cast<int>(snake.head_y);
+  if(containsObstacle(new_x, new_y)){
+    running = false;
+    snake.alive = false;
+    return;
+  }
 
   // Check if there's food over here
   if (food.x == new_x && food.y == new_y) {

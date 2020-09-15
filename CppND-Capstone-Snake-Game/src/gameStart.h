@@ -15,11 +15,12 @@ class gameStarter{
   	void highScore(std::string name, int score);
   	void printLeaderBoards();
   	void setDifficulty(int difficulty, Game& game);
+    int getCurrentHighScore();
   	void quit();
-  	bool playAgain();
   	
   private:
   	static bool sortByValue(const std::pair<std::string, int> &a, const std::pair<std::string, int> &b);
+    int highscore;
 };
 
 

@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <vector>
 #include <random>
 #include "SDL.h"
 #include "controller.h"
@@ -17,10 +18,13 @@ class Game {
   void setSpeedIncrease(double speed);
   bool setObstacles(bool obs, int numberOfObstacles);
   bool setBorder(bool ans);
-
+  bool containsObstacle(int x, int y);
+  void addObstacles();
+  
  private:
   Snake snake;
   SDL_Point food;
+  std::vector<SDL_Point> obstaclePoints;
 
   std::random_device dev;
   std::mt19937 engine;

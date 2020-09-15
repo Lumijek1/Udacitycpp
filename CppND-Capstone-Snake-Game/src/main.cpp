@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <thread>
+#include <chrono>
 #include "controller.h"
 #include "game.h"
 #include "renderer.h"
@@ -17,10 +19,14 @@ int main() {
   Controller controller;
   Game game(kGridWidth, kGridHeight);
   gameStarter starter;
+  int highscore = starter.getCurrentHighScore();
   bool start = false;
   while(start == false){
     start = starter.start(game);
   }
+  std::cout << "Game starting in 3 seconds!" << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
   game.Run(controller, renderer, kMsPerFrame);
   std::cout << "Game has terminated successfully!\n" << std::endl;
 
@@ -28,6 +34,9 @@ int main() {
   std::cout << "Enter you name please: ";
   std::cin >> name;
   std::cout << "\n";
+  if(game.GetScore() > highscore){
+    std::cout << "Congratulations you set a new High Score!!!!\n" << std::endl;
+  }
   starter.highScore(name, game.GetScore());
   std::cout << "Score: " << game.GetScore() << "\n";
   std::cout << "Size: " << game.GetSize() << "\n";
